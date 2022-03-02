@@ -17,8 +17,8 @@ from sklearn.kernel_approximation import (RBFSampler, Nystroem)
 from sklearn.decomposition import PCA
 
 #fetch original mnist dataset
-from sklearn.datasets import fetch_mldata
-mnist = fetch_mldata('MNIST original', data_home='./')
+from sklearn.datasets import fetch_openml
+mnist = fetch_openml('mnist_784', data_home='./')
 
 #minist object contains: data, COL_NAMES, DESCR, target fields
 #you can check it by running
@@ -39,7 +39,7 @@ X_data =images/255.0
 Y = targets
 
 #split data to train and test 
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection  import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, random_state=42)
 
 # Create a classifier: a support vector classifier
@@ -63,17 +63,17 @@ import datetime as dt
 # We learn the digits on train part
 
 kernel_svm_start_time = dt.datetime.now()
-print 'Start kernel svm learning at {}'.format(str(kernel_svm_start_time))
+print('Start kernel svm learning at {}'.format(str(kernel_svm_start_time)))
 kernel_svm.fit(X_train, y_train)
 kernel_svm_end_time = dt.datetime.now()
 elapsed_time = kernel_svm_end_time - kernel_svm_start_time
-print 'End kernel svm learning at {}'.format(str(kernel_svm_end_time))
-print 'Elapsed learning {}'.format(str(elapsed_time))
+print('End kernel svm learning at {}'.format(str(kernel_svm_end_time)))
+print('Elapsed learning {}'.format(str(elapsed_time)))
 
 kernel_svm_start_time = dt.datetime.now()
 kernel_svm_score = kernel_svm.score(X_test, y_test)
 elapsed_time = dt.datetime.now() - kernel_svm_start_time
-print 'Prediction takes {}'.format(str(elapsed_time))
+print('Prediction takes {}'.format(str(elapsed_time)))
 
 linear_svm_time = dt.datetime.now()
 linear_svm.fit(X_train, y_train)

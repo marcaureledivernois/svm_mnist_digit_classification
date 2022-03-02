@@ -12,14 +12,14 @@ import datetime as dt
 # Import datasets, classifiers and performance metrics
 from sklearn import datasets, svm, metrics
 #fetch original mnist dataset
-from sklearn.datasets import fetch_mldata
+from sklearn.datasets import fetch_openml
 
 # import custom module
 from mnist_helpers import *
 
 
 # it creates mldata folder in your root project folder
-mnist = fetch_mldata('MNIST original', data_home='./')
+mnist = fetch_openml('mnist_784', data_home='./')
 
 #minist object contains: data, COL_NAMES, DESCR, target fields
 #you can check it by running
