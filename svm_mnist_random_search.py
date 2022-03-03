@@ -27,9 +27,9 @@ from mnist_helpers import *
 
 
 #fetch original mnist dataset
-from sklearn.datasets import fetch_mldata
+from sklearn.datasets import fetch_openml
 # it creates mldata folder in your root project folder
-mnist = fetch_mldata('MNIST original', data_home='./')
+mnist = fetch_openml('mnist_784', data_home='./')
 
 
 #minist object contains: data, COL_NAMES, DESCR, target fields

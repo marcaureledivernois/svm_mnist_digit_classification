@@ -54,45 +54,33 @@ X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, r
 
 
 ############### Classification with grid search ##############
-
-# Warning! It takes really long time to compute this about 2 days
-
-# Create parameters grid for RBF kernel, we have to set C and gamma
 from sklearn.model_selection import GridSearchCV
 
-# generate matrix with gammas
-# [ [10^-4, 2*10^-4, 5*10^-4], 
-#   [10^-3, 2*10^-3, 5*10^-3],
-#   ......
-#   [10^3, 2*10^3, 5*10^3] ]
-#gamma_range = np.outer(np.logspace(-4, 3, 8),np.array([1,2, 5]))
+# Create parameters grid for RBF kernel, we have to set C and gamma
 
+grid_size = 'small_grid'  #'big_grid'
 
-# generate a much smaller matrix with gammas
-# it is essentially the same operation as above 
-# but with the smaller range of parameters
-# it will be faster 
-# [ [10^-3,  5*10^-3], 
-#   [10^-2,  5*10^-2],
-#   ......
-#   [10^0, 5*10^0] ]
-gamma_range = np.outer(np.logspace(-3, 0, 4),np.array([1,5]))
+if grid_size == 'big_grid':
+    #Warning! It takes really long time to compute this about 2 days
+    gamma_range = np.outer(np.logspace(-4, 3, 8),np.array([1,2, 5]))
+    C_range = np.outer(np.logspace(-3, 3, 7),np.array([1,2, 5]))
+elif grid_size == 'small_grid':
+    gamma_range = np.outer(np.logspace(-2, -1, 1),np.array([1,5]))
+    C_range = np.outer(np.logspace(0, 0, 1),np.array([1,5]))
+else:
+    raise Exception('Invalid grid_size parameter')
 
 # make matrix flat, change to 1D numpy array
 gamma_range = gamma_range.flatten()
-
-# generate matrix with all C
-#C_range = np.outer(np.logspace(-3, 3, 7),np.array([1,2, 5]))
-C_range = np.outer(np.logspace(-1, 1, 3),np.array([1,5]))
-# flatten matrix, change to 1D numpy array
 C_range = C_range.flatten()
+
 
 parameters = {'kernel':['rbf'], 'C':C_range, 'gamma': gamma_range}
 
 svm_clsf = svm.SVC()
 
-# increase n_jobs in order to run in parallel
-grid_clsf = GridSearchCV(estimator=svm_clsf,param_grid=parameters,n_jobs=1, verbose=2)
+# increase n_jobs in order to run in parallel, set n_jobs = -1 for all processors
+grid_clsf = GridSearchCV(estimator=svm_clsf,param_grid=parameters,n_jobs=-1, verbose=3)
 
 
 start_time = dt.datetime.now()
