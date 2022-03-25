@@ -1,5 +1,6 @@
 # SVM MNIST digit classification in python using scikit-learn
 
+! Disclaimer : This repo has been forked from https://github.com/ksopyla ! I made some minor changes/improvements for exploration.
 The project presents the well-known problem of [MNIST handwritten digit classification](https://en.wikipedia.org/wiki/MNIST_database).
 For the purpose of this tutorial, I will use [Support Vector Machine (SVM)](https://en.wikipedia.org/wiki/Support_vector_machine) 
 the algorithm with raw pixel features. 
